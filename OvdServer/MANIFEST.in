@@ -1,0 +1,6 @@
+include ulteo-ovd-slaveserver ovd-slaveserver-role
+include *.py
+include manpages/*
+include examples/*
+include ovd/Platform/Windows/*.py
+purge ovd.Role.Gateway
