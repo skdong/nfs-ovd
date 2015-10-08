@@ -29,6 +29,8 @@ from ovd.Logger import Logger
 
 from Config import Config
 
+from FsCryptManger import FsCryptManger
+
 
 class Share:
 	STATUS_NOT_EXISTS = 1
@@ -40,6 +42,8 @@ class Share:
 		self.directory = directory + "/" + name
 		self.group = "ovd_share_"+self.name
 		self.users = []
+		self.keyid = 'nfstest'
+		self.crypt = FsCryptManger(self.directory,self.keyid)
 		
 		self.active = False
 	
@@ -84,6 +88,7 @@ class Share:
 	
 	
 	def enable(self):
+		self.crypt.decrypt_dir()
 		cmd = "groupadd  %s"%(self.group)
 		s, o = commands.getstatusoutput(cmd)
 		if s is not 0:
@@ -149,6 +154,8 @@ class Share:
 		self.do_right_normalization()
 		
 		self.active = False
+
+		self.crypt.encrypt_dir()
 		return ret
 	
 	
