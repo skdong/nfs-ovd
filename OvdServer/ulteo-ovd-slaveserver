@@ -167,7 +167,8 @@ class InterruptException(Exception):
 
 if __name__ == "__main__":
 	# freeze_support must be the first line
-	sys.setdefaultencodeing('utf8')
+	reload(sys)
+	sys.setdefaultencoding('utf8')
 	import multiprocessing
 	multiprocessing.freeze_support()
 	
