@@ -32,6 +32,7 @@ def report_error(message):
 
 class Config:
 	# generic
+	config_file = ''
 	infos = {}
 	
 	roles = []
@@ -62,11 +63,12 @@ class Config:
 	
 	@staticmethod
 	def read(filename):
+		Config.config_file = filename
 		Config.parser = ConfigParser.ConfigParser()
 		try:
-			Config.parser.read(filename)
+			Config.parser.read(Config.config_file)
 		except Exception, err:
-			report_error("invalid configuration file '%s'"%(filename))
+			report_error("invalid configuration file '%s'"%(Config.config_file))
 			report_error(str(err))
 			return False
 		
