@@ -99,6 +99,6 @@ class Config:
 	def read():
 		config = ConfigParser.ConfigParser()
 		config.read(GConfig.config_file)
-		if config.hasoption('FileServer','CryptKey'):
+		if config.has_option('FileServer','CryptKey'):
 			Config.crypt_key = config.get('FileServer','CryptKey')
 		return True
