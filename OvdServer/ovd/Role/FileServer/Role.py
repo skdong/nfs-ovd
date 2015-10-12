@@ -45,6 +45,7 @@ class Role(AbstractRole):
 		self.has_run = False
 		self.shares = {}
 		self.wm = None
+		Config.read()
 	
 	def init(self):
 		Logger.info("FileServer init")

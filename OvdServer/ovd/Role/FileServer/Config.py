@@ -21,8 +21,10 @@
 import grp
 import os
 import pwd
+import ConfigParser
 
 from ovd.Logger import Logger
+from ovd.Config import Config as GConfig
 
 class Config:
 	general = None
@@ -35,6 +37,7 @@ class Config:
 	dav_user = "www-data"
 	dav_uid = None
 	dav_passwd_file = "/var/spool/ulteo/ovd/fs.dav.passwd"
+	crypt_key = "nfschina"
 	
 	@staticmethod
 	def init(infos):
@@ -90,4 +93,12 @@ class Config:
 			return False
 		
 		
+		return True
+
+	@staticmethod
+	def read():
+		config = ConfigParser.ConfigParser()
+		config.read(GConfig.config_file)
+		if config.hasoption('FileServer','CryptKey'):
+			Config.crypt_key = config.get('FileServer','CryptKey')
 		return True

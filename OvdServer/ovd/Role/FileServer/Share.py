@@ -42,8 +42,7 @@ class Share:
 		self.directory = directory + "/" + name
 		self.group = "ovd_share_"+self.name
 		self.users = []
-		self.keyid = 'nfstest'
-		self.crypt = FsCryptManger(self.directory,self.keyid)
+		self.crypt = FsCryptManger(self.directory,Config.crypt_key)
 		
 		self.active = False
 	
