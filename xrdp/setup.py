@@ -28,7 +28,7 @@ setup_args["description"] = 'Python API for XRDP'
 setup_args["author"] = 'Samuel Bovée'
 setup_args["author_email"] = 'samuel@ulteo.com'
 setup_args["url"] = "http://www.ulteo.com/"
-setup_args["version"] = '3.0.4.0'
+setup_args["version"] = '99.99.svn0'
 setup_args["packages"] = ['xrdp']
 setup_args["package_dir"] = {'xrdp': 'python'}
 
