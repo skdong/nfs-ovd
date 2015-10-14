@@ -25,6 +25,7 @@ for tool in $tools; do
 done
 
 # get version
+OVD_VERSION="3.0.4.0"
 if [ -n "$OVD_VERSION" ]; then
     version="$OVD_VERSION"
 else
