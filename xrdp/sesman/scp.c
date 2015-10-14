@@ -98,5 +98,8 @@ scp_process_start(void* sck)
   g_tcp_close(scon.in_sck);
   free_stream(scon.in_s);
   free_stream(scon.out_s);
+
+  scp_session_destroy(sdata);
+
   return 0;
 }

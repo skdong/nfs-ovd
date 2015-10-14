@@ -312,7 +312,8 @@ xml_send_success(int client, char* message)
 	struct stream* s;
 	int buff_size, size;
 
-	doc = xmlNewDoc(xmlCharStrdup("1.0"));
+	doc = xmlNewDoc(BAD_CAST"1.0");
+	//doc = xmlNewDoc(xmlCharStrdup("1.0"));
 	if (doc == NULL)
 	{
 		log_message(&(g_cfg->log), LOG_LEVEL_WARNING, "sesman[xml_send_success]: "
@@ -320,8 +321,8 @@ xml_send_success(int client, char* message)
 		return 0;
 	}
 	doc->encoding = xmlCharStrdup("UTF-8");
-	node = xmlNewNode(NULL, xmlCharStrdup("response"));
-	xmlNodeSetContent(node, xmlCharStrdup(message));
+	node = xmlNewNode(NULL, BAD_CAST"response");
+	xmlNodeSetContent(node, BAD_CAST message );
 	xmlDocSetRootElement(doc, node);
 
 	xmlDocDumpFormatMemory(doc, &xmlbuff, &buff_size, 1);
@@ -344,6 +345,7 @@ xml_send_success(int client, char* message)
 	}
 	free_stream(s);
 	xmlFree(xmlbuff);
+	xmlFreeDoc(doc);
 	return buff_size;
 }
 
@@ -355,7 +357,8 @@ xml_send_key_value(int client, char* username, char* key, char* value)
 	xmlNodePtr node, node2;
 	xmlDocPtr doc;
 
-	doc = xmlNewDoc(xmlCharStrdup("1.0"));
+	//doc = xmlNewDoc(xmlCharStrdup("1.0"));
+	doc = xmlNewDoc(BAD_CAST"1.0");
 	if (doc ==NULL)
 	{
 		log_message(&(g_cfg->log), LOG_LEVEL_WARNING, "sesman[xml_send_key_value]: "
@@ -363,11 +366,16 @@ xml_send_key_value(int client, char* username, char* key, char* value)
 		return 1;
 	}
 	doc->encoding = xmlCharStrdup("UTF-8");
-	node = xmlNewNode(NULL, xmlCharStrdup("response"));
-	node2 = xmlNewNode(NULL, xmlCharStrdup("user_conf"));
-	xmlSetProp(node2, xmlCharStrdup("key"), xmlCharStrdup(key) );
-	xmlSetProp(node2, xmlCharStrdup("username"), xmlCharStrdup(username) );
-	xmlSetProp(node2, xmlCharStrdup("value"), xmlCharStrdup(value) );
+	//node = xmlNewNode(NULL, xmlCharStrdup("response"));
+	//node2 = xmlNewNode(NULL, xmlCharStrdup("user_conf"));
+	node = xmlNewNode(NULL, BAD_CAST"response");
+	node2 = xmlNewNode(NULL, BAD_CAST"user_conf");
+	//xmlSetProp(node2, xmlCharStrdup("key"), xmlCharStrdup(key) );
+	//xmlSetProp(node2, xmlCharStrdup("username"), xmlCharStrdup(username) );
+	//xmlSetProp(node2, xmlCharStrdup("value"), xmlCharStrdup(value) );
+	xmlSetProp(node2, BAD_CAST"key", BAD_CAST key );
+	xmlSetProp(node2, BAD_CAST"username", BAD_CAST username );
+	xmlSetProp(node2, BAD_CAST"value", BAD_CAST value  );
 	xmlAddChild(node, node2);
 	xmlDocSetRootElement(doc, node);
 	xml_send_info(client, doc);
@@ -543,7 +551,6 @@ send_session(int client, int session_id, char* user)
 	response = xmlCharStrdup("response");
 	session = xmlCharStrdup("session");
 	node = xmlNewNode(NULL, response);
-	node2 = xmlNewNode(NULL, session);
 
 	if (sess != NULL)
 	{
@@ -556,6 +563,7 @@ send_session(int client, int session_id, char* user)
 		status = xmlCharStrdup("status");
 		status_value = xmlCharStrdup(session_get_status_string(sess->status));
 
+		node2 = xmlNewNode(NULL, session);
 		xmlSetProp(node2, id, id_value);
 		xmlSetProp(node2, username, username_value);
 		xmlSetProp(node2, status, status_value );
