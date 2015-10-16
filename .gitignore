@@ -1,7 +1,11 @@
 *.[oa]
 *.la
 *.lo
+*.swp
 build
+config.log
+tags
+/xrdp/autom4te.cache
 /xrdp/common/.libs/
 /xrdp/genkeymap/xrdp-genkeymap
 /xrdp/keygen/.libs/
