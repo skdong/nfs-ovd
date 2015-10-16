@@ -13,9 +13,9 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   xrdp: A Remote Desktop Protocol server.
-   Copyright (C) Jay Sorg 2005-2008
-*/
+xrdp: A Remote Desktop Protocol server.
+Copyright (C) Jay Sorg 2005-2008
+ */
 
 /**
  *
@@ -31,20 +31,20 @@
 extern struct config_sesman* g_cfg; /* in sesman.c */
 static tbus session_creation_lock;
 
-void DEFAULT_CC
+	void DEFAULT_CC
 scp_init_mutex()
 {
 	session_creation_lock = tc_mutex_create();
 }
 
-void DEFAULT_CC
+	void DEFAULT_CC
 scp_remove_mutex()
 {
 	tc_mutex_delete(session_creation_lock);
 }
 
 /******************************************************************************/
-void DEFAULT_CC
+	void DEFAULT_CC
 scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 {
 	int display = 0;
@@ -72,7 +72,7 @@ scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 		if (s_item->status == SESMAN_SESSION_STATUS_TO_DESTROY)
 		{
 			log_message(&(g_cfg->log), LOG_LEVEL_WARNING, "Session for user %s is in destroy, unable to initialize a new session", s->username);
-  		scp_v0s_deny_connection(c, "Your last session is currently \nended, retry later");
+			scp_v0s_deny_connection(c, "Your last session is currently \nended, retry later");
 		}
 		else
 		{

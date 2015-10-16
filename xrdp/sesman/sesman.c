@@ -13,9 +13,9 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-   xrdp: A Remote Desktop Protocol server.
-   Copyright (C) Jay Sorg 2005-2008
-*/
+xrdp: A Remote Desktop Protocol server.
+Copyright (C) Jay Sorg 2005-2008
+ */
 
 /**
  *
@@ -52,7 +52,7 @@ static THREAD_POOL* pool;
 static char pid_file[256];
 
 
-void DEFAULT_CC
+	void DEFAULT_CC
 sesman_stop(void)
 {
 	stop = 1;
@@ -67,7 +67,7 @@ sesman_stop(void)
  * @brief Starts sesman main loop
  *
  */
-static void DEFAULT_CC
+	static void DEFAULT_CC
 sesman_main_loop(void)
 {
 	int in_sck;
@@ -79,7 +79,7 @@ sesman_main_loop(void)
 
 	/*main program loop*/
 	log_message(&(g_cfg->log), LOG_LEVEL_INFO, "sesman[sesman_main_loop]: "
-				"listening...");
+			"listening...");
 	g_sck = g_tcp_socket();
 	g_tcp_set_non_blocking(g_sck);
 	error = scp_tcp_bind(g_sck, g_cfg->listen_address, g_cfg->listen_port);
@@ -154,7 +154,7 @@ sesman_main_loop(void)
 
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 xml_get_xpath(xmlDocPtr doc, char* xpath, char* value)
 {
 	xmlXPathObjectPtr xpathObj;
@@ -194,7 +194,7 @@ xml_get_xpath(xmlDocPtr doc, char* xpath, char* value)
 }
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 xml_send_info(int client, xmlDocPtr doc)
 {
 	xmlChar* xmlbuff;
@@ -209,7 +209,7 @@ xml_send_info(int client, xmlDocPtr doc)
 	init_stream(s, buff_size + 6);
 	out_uint32_be(s,buff_size);
 	out_uint8p(s, xmlbuff, buff_size)
-	size = s->p - s->data;
+		size = s->p - s->data;
 	if (g_tcp_can_send(client, 10))
 	{
 		int sended = 0;
@@ -246,7 +246,7 @@ end:
 }
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 xml_send_error(int client, const char* message)
 {
 	xmlChar* xmlbuff;
@@ -283,7 +283,7 @@ xml_send_error(int client, const char* message)
 	init_stream(s, buff_size + 6);
 	out_uint32_be(s,buff_size);
 	out_uint8p(s, xmlbuff, buff_size)
-	size = s->p - s->data;
+		size = s->p - s->data;
 	if (g_tcp_can_send(client, 10))
 	{
 		buff_size = g_tcp_send(client, s->data, size, 0);
@@ -303,7 +303,7 @@ xml_send_error(int client, const char* message)
 }
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 xml_send_success(int client, char* message)
 {
 	xmlChar* xmlbuff;
@@ -333,7 +333,7 @@ xml_send_success(int client, char* message)
 	init_stream(s, buff_size + 6);
 	out_uint32_be(s,buff_size);
 	out_uint8p(s, xmlbuff, buff_size)
-	size = s->p - s->data;
+		size = s->p - s->data;
 	if (g_tcp_can_send(client, 10))
 	{
 		buff_size = g_tcp_send(client, s->data, size, 0);
@@ -351,7 +351,7 @@ xml_send_success(int client, char* message)
 
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 xml_send_key_value(int client, char* username, char* key, char* value)
 {
 	xmlNodePtr node, node2;
@@ -385,7 +385,7 @@ xml_send_key_value(int client, char* username, char* key, char* value)
 
 
 /************************************************************************/
-xmlDocPtr DEFAULT_CC
+	xmlDocPtr DEFAULT_CC
 xml_receive_message(int client)
 {
 	struct stream* s;
@@ -421,7 +421,7 @@ xml_receive_message(int client)
 
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 send_sessions(int client)
 {
 	struct session_item* sess;
@@ -495,7 +495,7 @@ send_sessions(int client)
 }
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 send_session(int client, int session_id, char* user)
 {
 	struct session_item* sess = NULL;
@@ -593,7 +593,7 @@ send_session(int client, int session_id, char* user)
 
 
 /************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 send_logoff(int client, int session_id)
 {
 	struct session_item* sess;
@@ -712,7 +712,7 @@ void* thread_routine(void* val)
 }
 
 /************************************************************************/
-int
+	int
 process_request(int client)
 {
 	int session_id = 0;
@@ -744,9 +744,9 @@ process_request(int client)
 		return close_management_connection(doc, client);
 	}
 	log_message(&(g_cfg->log), LOG_LEVEL_DEBUG_PLUS, "sesman[process_request]: "
-				"Request_type : '%s' ", request_type);
+			"Request_type : '%s' ", request_type);
 	log_message(&(g_cfg->log), LOG_LEVEL_DEBUG_PLUS, "sesman[process_request]: "
-				"Request_action : '%s' ", request_action);
+			"Request_action : '%s' ", request_action);
 
 	if( g_strcmp(request_type, "sessions") == 0)
 	{
@@ -883,7 +883,7 @@ process_request(int client)
 	return close_management_connection(doc, client);
 }
 
-THREAD_RV THREAD_CC
+	THREAD_RV THREAD_CC
 admin_thread(void* param)
 {
 	int server = g_create_unix_socket(MANAGEMENT_SOCKET_NAME);
@@ -917,7 +917,7 @@ admin_thread(void* param)
 	}
 }
 
-THREAD_RV THREAD_CC
+	THREAD_RV THREAD_CC
 monit_thread(void* param)
 {
 	lock_stopwait_acquire();
@@ -944,7 +944,7 @@ monit_thread(void* param)
 
 
 /******************************************************************************/
-int DEFAULT_CC
+	int DEFAULT_CC
 main(int argc, char** argv)
 {
 	int fd;
@@ -968,15 +968,15 @@ main(int argc, char** argv)
 		daemon = 1;
 	}
 	else if ((2 == argc) && ((0 == g_strcasecmp(argv[1], "--nodaemon")) ||
-			(0 == g_strcasecmp(argv[1], "-n")) ||
-			(0 == g_strcasecmp(argv[1], "-ns"))))
+				(0 == g_strcasecmp(argv[1], "-n")) ||
+				(0 == g_strcasecmp(argv[1], "-ns"))))
 	{
 		/* starts sesman not daemonized */
 		g_printf("starting sesman in foregroud...");
 		daemon = 0;
 	}
 	else if ((2 == argc) && ((0 == g_strcasecmp(argv[1], "--help")) ||
-			(0 == g_strcasecmp(argv[1], "-h"))))
+				(0 == g_strcasecmp(argv[1], "-h"))))
 	{
 		/* help screen */
 		g_printf("sesman - xrdp session manager\n\n");
@@ -989,7 +989,7 @@ main(int argc, char** argv)
 		g_exit(0);
 	}
 	else if ((2 == argc) && ((0 == g_strcasecmp(argv[1], "--kill")) ||
-			(0 == g_strcasecmp(argv[1], "-k"))))
+				(0 == g_strcasecmp(argv[1], "-k"))))
 	{
 		/* killing running sesman */
 		/* check if sesman is running */
@@ -1106,7 +1106,7 @@ main(int argc, char** argv)
 	g_signal_user_interrupt(sig_sesman_shutdown); /* SIGINT	*/
 	g_signal_kill(sig_sesman_shutdown); /* SIGKILL */
 	g_signal_terminate(sig_sesman_shutdown); /* SIGTERM */
-//	g_signal_child_stop(sig_sesman_session_end); /* SIGCHLD */
+	//	g_signal_child_stop(sig_sesman_session_end); /* SIGCHLD */
 #endif
 #if 0
 	thread_sighandler_start();
