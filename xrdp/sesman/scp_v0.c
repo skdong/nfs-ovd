@@ -82,6 +82,7 @@ scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 		}
 
 		auth_end(data);
+		g_free(s_item);
 		tc_mutex_unlock(session_creation_lock);
 		return;
 	}

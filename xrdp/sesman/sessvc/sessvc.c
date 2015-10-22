@@ -36,6 +36,8 @@ Author David LECHEVALIER <david@ulteo.com> 2012
 #include "arch.h"
 #include "parse.h"
 #include<stdarg.h>
+#include<string.h>
+#include<errno.h>
 
 static int g_term = 0;
 static int wm_pid;
@@ -60,6 +62,12 @@ term_signal_handler(int sig)
 
 	g_sigterm(chansrv_pid);
 	g_waitpid(chansrv_pid);
+}
+
+	void DEFAULT_CC
+debug_term_signal_handler(int sig)
+{
+	debug_log(FINFO,"xrdp-sessvc: term_signal_handler: got signal %d", sig);
 }
 
 /*****************************************************************************/
@@ -138,6 +146,9 @@ main(int argc, char** argv)
 	char exe_path[262];
 	char *username;
 
+	//g_system("ulimit -c unlimited");
+	
+	
 	debug_log(FINFO,"xrdp-sessvc: the pwd %s", g_getenv("PWD"));
 	if (argc < 4)
 	{
@@ -170,6 +181,7 @@ main(int argc, char** argv)
 	}
 	lerror = 0;
 
+	debug_log(FINFO,"the kill child status %d",kill(chansrv_pid,0));
 	g_signal_kill(term_signal_handler); /* SIGKILL */
 	g_signal_terminate(term_signal_handler); /* SIGTERM */
 	g_signal_user_interrupt(term_signal_handler); /* SIGINT */
@@ -185,8 +197,8 @@ main(int argc, char** argv)
 	{
 		lerror = g_get_errno();
 	}
-	debug_log(FINFO,"xrdp-sessvc: WM is dead (waitpid said %d, errno is %d) "
-			"exiting...", ret, lerror);
+	debug_log(FINFO,"xrdp-sessvc: WM %d is dead (waitpid said %d, errno is %d) "
+			"exiting... %d %s", wm_pid,ret, lerror, errno, strerror(errno));
 	/* kill channel server */
 	debug_log(FINFO,"xrdp-sessvc: stopping channel server");
 	g_sigterm(chansrv_pid);
@@ -195,7 +207,7 @@ main(int argc, char** argv)
 	{
 		ret = g_waitpid(chansrv_pid);
 	}
-	chansrv_cleanup(chansrv_pid);
+	//chansrv_cleanup(chansrv_pid);
 	/* kill X server */
 	debug_log(FINFO,"xrdp-sessvc: stopping X server");
 	g_sigterm(x_pid);
@@ -221,7 +233,7 @@ int debug_log(char* file, int line, char* format, ...)
 	{
 		return -1;
 	}
-	fprintf(fp,"%s %d :",file,line);
+	fprintf(fp,"%s %d %d:",file,line,g_getpid());
 	va_start(ap,format);
 	vfprintf(fp,format,ap);
 	va_end(ap);

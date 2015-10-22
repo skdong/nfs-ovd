@@ -29,7 +29,10 @@ sessvc.o: sessvc.c /usr/include/stdc-predef.h ../../config_ac.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
  /usr/include/x86_64-linux-gnu/bits/semaphore.h ../../common/arch.h \
- ../../common/parse.h
+ ../../common/parse.h /usr/include/string.h /usr/include/errno.h \
+ /usr/include/x86_64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
+ /usr/include/asm-generic/errno-base.h
 
 /usr/include/stdc-predef.h:
 
@@ -126,3 +129,17 @@ sessvc.o: sessvc.c /usr/include/stdc-predef.h ../../config_ac.h \
 ../../common/arch.h:
 
 ../../common/parse.h:
+
+/usr/include/string.h:
+
+/usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/asm/errno.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/errno-base.h:

@@ -1,0 +1,89 @@
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:51:        _item->prev = _item->next = NULL;                               \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:59:        if ((_item->next = *_head))                                     \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:60:            _item->next->prev = _item;                                  \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:61:        _item->prev = NULL;                                             \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:70:        if (_item->next)                                                \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:71:            _item->next->prev = _item->prev;                            \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:72:        if (_item->prev)                                                \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:73:            _item->prev->next = _item->next;                            \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:76:            *_head = _item->next;                                       \
+chansrv/rdpsnd/pulse_headers/pulsecore/llist.h:78:        _item->next = _item->prev = NULL;                               \
+scp_v0.c:71:		display = s_item->display;
+scp_v0.c:72:		if (s_item->status == SESMAN_SESSION_STATUS_TO_DESTROY)
+scp_v0.c:79:			session_update_status_by_user(s_item->name, SESMAN_SESSION_STATUS_ACTIVE);
+scp_v1.c:162:          display=sitem->display;
+scp_v1.c:166:                      s->username, sitem->pid, display);
+session.c:115:		if (g_strncmp(name, tmp->item->name, 255) == 0)
+session.c:258:		if (item->display == display)
+session.c:685:		temp->item->pid = pid;
+session.c:686:		temp->item->display = display;
+session.c:687:		temp->item->width = width;
+session.c:688:		temp->item->height = height;
+session.c:689:		temp->item->bpp = bpp;
+session.c:690:		temp->item->data = data;
+session.c:691:		g_strncpy(temp->item->name, username, 255);
+session.c:692:		g_strncpy(temp->item->homedir, user_dir, sizeof(temp->item->homedir));
+session.c:696:		temp->item->connect_time.year = (tui16)(stime.tm_year + 1900);
+session.c:697:		temp->item->connect_time.month = (tui8)stime.tm_mon;
+session.c:698:		temp->item->connect_time.day = (tui8)stime.tm_mday;
+session.c:699:		temp->item->connect_time.hour = (tui8)stime.tm_hour;
+session.c:700:		temp->item->connect_time.minute = (tui8)stime.tm_min;
+session.c:701:		zero_time(&(temp->item->disconnect_time));
+session.c:702:		zero_time(&(temp->item->idle_time));
+session.c:704:		temp->item->type=type;
+session.c:705:		temp->item->status=SESMAN_SESSION_STATUS_ACTIVE;
+session.c:1090:		if (tmp->item->pid == pid)
+session.c:1095:					"terminated", tmp->item->display, tmp->item->name);
+session.c:1109:			//g_waitpid(tmp->item->name);
+session.c:1159:		if (tmp->item->display == display)
+session.c:1163:					"terminated", tmp->item->display, tmp->item->name);
+session.c:1252:		if (tmp->item->pid == pid)
+session.c:1289:		if (tmp->item->display == display)
+session.c:1337:		if (tmp->item->status == SESMAN_SESSION_STATUS_TO_DESTROY ||
+session.c:1338:				(tmp->item->status == SESMAN_SESSION_STATUS_DISCONNECTED && g_cfg->sess.kill_disconnected == 1))
+session.c:1342:					"Cleanning session %d - user %s", tmp->item->display, tmp->item->name);
+session.c:1343:			g_sigterm(tmp->item->pid);
+session.c:1344:			if (g_testpid(tmp->item->pid) == tmp->item->pid)
+session.c:1367:					"Inspect session %d - user %s - ", tmp->item->display, tmp->item->name);
+session.c:1401:		if (g_strcmp(username, tmp->item->name)==0)
+session.c:1404:			return tmp->item->display;
+session.c:1436:		if ((NULL == user) || (!g_strncasecmp(user, tmp->item->name, 256)))
+session.c:1439:					"result=%d", (tmp->item->status), flags,
+session.c:1440:					((tmp->item->status) & flags));
+session.c:1441:			if ((tmp->item->status) & flags)
+session.c:1474:		if ((NULL == user) || (!g_strncasecmp(user, tmp->item->name, 256)))
+session.c:1476:			if ((tmp->item->status) & flags)
+session.c:1478:				(sess[index]).SID=tmp->item->pid;
+session.c:1479:				(sess[index]).type=tmp->item->type;
+session.c:1480:				(sess[index]).height=tmp->item->height;
+session.c:1481:				(sess[index]).width=tmp->item->width;
+session.c:1482:				(sess[index]).bpp=tmp->item->bpp;
+session.c:1484:				/*(sess[index]).connect_time.year = tmp->item->connect_time.year;
+session.c:1485:				  (sess[index]).connect_time.month = tmp->item->connect_time.month;
+session.c:1486:				  (sess[index]).connect_time.day = tmp->item->connect_time.day;
+session.c:1487:				  (sess[index]).connect_time.hour = tmp->item->connect_time.hour;
+session.c:1488:				  (sess[index]).connect_time.minute = tmp->item->connect_time.minute;
+session.c:1489:				  (sess[index]).disconnect_time.year = tmp->item->disconnect_time.year;
+session.c:1490:				  (sess[index]).disconnect_time.month = tmp->item->disconnect_time.month;
+session.c:1491:				  (sess[index]).disconnect_time.day = tmp->item->disconnect_time.day;
+session.c:1492:				  (sess[index]).disconnect_time.hour = tmp->item->disconnect_time.hour;
+session.c:1493:				  (sess[index]).disconnect_time.minute = tmp->item->disconnect_time.minute;
+session.c:1494:				  (sess[index]).idle_time.year = tmp->item->idle_time.year;
+session.c:1495:				  (sess[index]).idle_time.month = tmp->item->idle_time.month;
+session.c:1496:				  (sess[index]).idle_time.day = tmp->item->idle_time.day;
+session.c:1497:				  (sess[index]).idle_time.hour = tmp->item->idle_time.hour;
+session.c:1498:				  (sess[index]).idle_time.minute = tmp->item->idle_time.minute;*/
+session.c:1499:				(sess[index]).conn_year = tmp->item->connect_time.year;
+session.c:1500:				(sess[index]).conn_month = tmp->item->connect_time.month;
+session.c:1501:				(sess[index]).conn_day = tmp->item->connect_time.day;
+session.c:1502:				(sess[index]).conn_hour = tmp->item->connect_time.hour;
+session.c:1503:				(sess[index]).conn_minute = tmp->item->connect_time.minute;
+session.c:1504:				(sess[index]).idle_days = tmp->item->idle_time.day;
+session.c:1505:				(sess[index]).idle_hours = tmp->item->idle_time.hour;
+session.c:1506:				(sess[index]).idle_minutes = tmp->item->idle_time.minute;
+session.c:1507:				(sess[index]).status = tmp->item->status;
+session.c:1544:		if (g_strcmp(user, tmp->item->name) == 0)
+session.c:1557:			//char* str2 = session_get_status_string(tmp->item->status);
+session.c:1558:			if (tmp->item->status == SESMAN_SESSION_STATUS_TO_DESTROY)
+session.c:1563:			tmp->item->status = status;
+session.c:1597:				"name : %s",tmp->item->name);
