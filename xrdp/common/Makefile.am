@@ -1,6 +1,5 @@
 
 AM_CFLAGS = \
-  -g -ggdb -O0\
   -Wall \
   -DXRDP_CFG_PATH=\"${sysconfdir}/xrdp\" \
   -DXRDP_SBIN_PATH=\"${sbindir}\" \
