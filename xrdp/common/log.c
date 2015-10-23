@@ -94,23 +94,23 @@ log_message(struct log_config* l_cfg, const char *file, const int line, const un
 	{
 		return LOG_ERROR_FILE_NOT_OPEN;
 	}
-	if ( lvl > LOG_LEVEL_ALWAYS)
+	if ( lvl > LEVEL_ALWAYS)
 	{
 		now_t = time(&now_t);
 		now = localtime(&now_t);
 
-		snprintf(buff, 21, "[%.4d%.2d%.2d-%.2d:%.2d:%.2d] ", (now->tm_year) + 1900,
+		len = snprintf(buff, LOG_BUFFER_SIZE, "[%.2d%.2d-%.2d:%.2d:%.2d] ",
 				(now->tm_mon) + 1, now->tm_mday, now->tm_hour, now->tm_min,
 				now->tm_sec);
 
-		log_lvl2str(lvl, buff + 20);
+		log_lvl2str(lvl, buff + 16);
 
-		//tmp_len = snprintf(buff + 28, "[%s] [%d] ", file, line);
+		len += snprintf(buff + len, LOG_BUFFER_SIZE, "[pid:%ld %s:%d] ", 
+				g_getpid(),file, line);
 
 		va_start(ap, msg);
-		//len = vsnprintf(buff + 28 + tmp_len, LOG_BUFFER_SIZE, msg, ap);
-		len = vsnprintf(buff + 28 , LOG_BUFFER_SIZE, msg, ap);
-		//len += tmp_len;
+		len += vsnprintf(buff + len, LOG_BUFFER_SIZE, msg, ap);
+		//len = vsnprintf(buff + 28 , LOG_BUFFER_SIZE, msg, ap);
 		va_end(ap);
 
 		/* checking for truncated messages */
@@ -121,16 +121,16 @@ log_message(struct log_config* l_cfg, const char *file, const int line, const un
 
 		/* forcing the end of message string */
 #ifdef _WIN32
-		buff[len + 28] = '\r';
-		buff[len + 29] = '\n';
-		buff[len + 30] = '\0';
+		buff[len + 0] = '\r';
+		buff[len + 1] = '\n';
+		buff[len + 2] = '\0';
 #else
 #ifdef _MACOS
-		buff[len + 28] = '\r';
-		buff[len + 29] = '\0';
+		buff[len + 0] = '\r';
+		buff[len + 1] = '\0';
 #else
-		buff[len + 28] = '\n';
-		buff[len + 29] = '\0';
+		buff[len + 0] = '\n';
+		buff[len + 1] = '\0';
 #endif
 #endif
 	}
