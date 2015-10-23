@@ -28,12 +28,20 @@
 #define LOG_BUFFER_SIZE      2048
 
 /* logging levels */
-#define LOG_LEVEL_ALWAYS        0
-#define LOG_LEVEL_ERROR         1
-#define LOG_LEVEL_WARNING       2
-#define LOG_LEVEL_INFO          3
-#define LOG_LEVEL_DEBUG         4
-#define LOG_LEVEL_DEBUG_PLUS    5
+#define LOG_LEVEL_ALWAYS       __FILE__, __LINE__, LEVEL_ALWAYS      
+#define LOG_LEVEL_ERROR        __FILE__, __LINE__, LEVEL_ERROR       
+#define LOG_LEVEL_WARNING      __FILE__, __LINE__, LEVEL_WARNING     
+#define LOG_LEVEL_INFO         __FILE__, __LINE__, LEVEL_INFO        
+#define LOG_LEVEL_DEBUG        __FILE__, __LINE__, LEVEL_DEBUG       
+#define LOG_LEVEL_DEBUG_PLUS   __FILE__, __LINE__, LEVEL_DEBUG_PLUS  
+
+/* logging levels */
+#define LEVEL_ALWAYS        0
+#define LEVEL_ERROR         1
+#define LEVEL_WARNING       2
+#define LEVEL_INFO          3
+#define LEVEL_DEBUG         4
+#define LEVEL_DEBUG_PLUS    5
 
 /* startup return values */
 #define LOG_STARTUP_OK          0
@@ -73,10 +81,10 @@ void DEFAULT_CC
 log_file(struct log_config* l_cfg, const unsigned int lvl, const char *filename);
 
 void DEFAULT_CC
-log_hexdump(struct log_config* l_cfg, const unsigned int lvl, unsigned char *p, unsigned int len);
+log_hexdump(struct log_config* l_cfg, const char* file, const int line, const unsigned int lvl, unsigned char *p, unsigned int len);
 
 int DEFAULT_CC
-log_message(struct log_config* l_cfg, const unsigned int lvl, const char* msg, ...);
+log_message(struct log_config* l_cfg, const char* file, const int line, const unsigned int lvl, const char* msg, ...);
 
 
 /**

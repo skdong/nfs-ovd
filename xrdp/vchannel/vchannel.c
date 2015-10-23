@@ -364,9 +364,9 @@ vchannel_init()
   log_conf->program_name = "vchannel";
   log_conf->log_file = 0;
   log_conf->fd = 0;
-  log_conf->log_level = LOG_LEVEL_DEBUG;
+  log_conf->log_level = LEVEL_DEBUG;
   log_conf->enable_syslog = 0;
-  log_conf->syslog_level = LOG_LEVEL_DEBUG;
+  log_conf->syslog_level = LEVEL_DEBUG;
 
   names = list_create();
   names->auto_free = 1;

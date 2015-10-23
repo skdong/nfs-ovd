@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 
   logging.program_name = g_strdup("sesadmin");
   logging.log_file = g_strdup("xrdp-sesadmin.log");
-  logging.log_level = LOG_LEVEL_DEBUG;
+  logging.log_level = LEVEL_DEBUG;
   logging.enable_syslog = 0;
   log_start(&logging);
 

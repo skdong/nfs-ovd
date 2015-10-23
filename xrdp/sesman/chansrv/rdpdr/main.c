@@ -54,9 +54,9 @@ disk_init()
 	l_config->program_name = "vchannel_rdpdr";
 	l_config->log_file = 0;
 	l_config->fd = 0;
-	l_config->log_level = LOG_LEVEL_DEBUG;
+	l_config->log_level = LEVEL_DEBUG;
 	l_config->enable_syslog = 0;
-	l_config->syslog_level = LOG_LEVEL_DEBUG;
+	l_config->syslog_level = LEVEL_DEBUG;
 
 	names = list_create();
 	names->auto_free = 1;

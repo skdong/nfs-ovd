@@ -340,7 +340,7 @@ wait_for_xserver(int display, int can_log)
 				log_message(&(g_cfg->log), LOG_LEVEL_ERROR,
 						"X server for display %d startup timeout",
 						display);
-				log_file(&(g_cfg->log), LOG_LEVEL_ERROR, x_log_file_path);
+				log_file(&(g_cfg->log), LEVEL_ERROR, x_log_file_path);
 			}
 			return 1;
 		}

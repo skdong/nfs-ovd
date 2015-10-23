@@ -205,9 +205,9 @@ config_read_logging(int file, struct log_config* lc, struct list* param_n,
 	lc->program_name = g_strdup("sesman");
 	lc->log_file = 0;
 	lc->fd = 0;
-	lc->log_level = LOG_LEVEL_DEBUG;
+	lc->log_level = LEVEL_DEBUG;
 	lc->enable_syslog = 0;
-	lc->syslog_level = LOG_LEVEL_DEBUG;
+	lc->syslog_level = LEVEL_DEBUG;
 
 	file_read_section(file, SESMAN_CFG_LOGGING, param_n, param_v);
 	for (i = 0; i < param_n->count; i++)

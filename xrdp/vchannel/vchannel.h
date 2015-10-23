@@ -36,7 +36,7 @@
 #include "parse.h"
 #include "list.h"
 
-#define LOG_LEVEL LOG_LEVEL_DEBUG
+#define LOG_LEVEL LEVEL_DEBUG
 #define VCHANNEL_SOCKET_DIR	"/var/spool/xrdp"
 #define ERROR		-1
 #define VCHANNEL_OPEN_RETRY_ATTEMPT		12
