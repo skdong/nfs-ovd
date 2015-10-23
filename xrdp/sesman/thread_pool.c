@@ -24,31 +24,31 @@
 extern struct config_sesman* g_cfg; /* in sesman.c */
 
 
-void
+	void
 thread_pool_lock_thread(THREAD_POOL* pool)
 {
 	tc_mutex_lock(pool->thread_wait);
 }
 
-void
+	void
 thread_pool_unlock_thread(THREAD_POOL* pool)
 {
 	tc_mutex_unlock(pool->thread_wait);
 }
 
-void
+	void
 thread_pool_acquire_job(THREAD_POOL* pool)
 {
 	tc_mutex_lock(pool->job_wait);
 }
 
-void
+	void
 thread_pool_release_job(THREAD_POOL* pool)
 {
 	tc_mutex_unlock(pool->job_wait);
 }
 
-int
+	int
 thread_pool_push_job(THREAD_POOL* pool, int job)
 {
 	if (job == 0)
@@ -64,7 +64,7 @@ thread_pool_push_job(THREAD_POOL* pool, int job)
 	return 0;
 }
 
-int
+	int
 thread_pool_pop_job(THREAD_POOL* pool)
 {
 	int job = 0;
@@ -87,14 +87,14 @@ thread_pool_pop_job(THREAD_POOL* pool)
 	return job;
 }
 
-void
+	void
 thread_pool_wait_job(THREAD_POOL* pool)
 {
 	thread_pool_lock_thread(pool);
 	thread_pool_unlock_thread(pool);
 }
 
-THREAD_POOL*
+	THREAD_POOL*
 thread_pool_init_pool(int thread_number)
 {
 	THREAD_POOL* pool = NULL;
@@ -103,9 +103,9 @@ thread_pool_init_pool(int thread_number)
 	pool = g_malloc(sizeof(THREAD_POOL), 1);
 	if (pool == NULL)
 	{
-	  log_message(&(g_cfg->log), LOG_LEVEL_ERROR, "xrdp-sesman[thread_pool_init_pool]: "
-	              "Unable to allocate memory for thread_pool");
-	  return NULL;
+		log_message(&(g_cfg->log), LOG_LEVEL_ERROR, "xrdp-sesman[thread_pool_init_pool]: "
+				"Unable to allocate memory for thread_pool");
+		return NULL;
 	}
 
 	pool->max_thread_count = thread_number;
@@ -120,7 +120,7 @@ thread_pool_init_pool(int thread_number)
 	return pool;
 }
 
-void
+	void
 thread_pool_delete_pool(THREAD_POOL* pool)
 {
 	thread_pool_lock_thread(pool);
@@ -134,14 +134,14 @@ thread_pool_delete_pool(THREAD_POOL* pool)
 	}
 }
 
-void
+	void
 thread_pool_start_pool_thread(THREAD_POOL* pool, void* (* thread_routine)(void*))
 {
 	thread_pool_lock_thread(pool);
 	int i;
 
-  log_message(&(g_cfg->log), LOG_LEVEL_DEBUG, "xrdp-sesman[init_pool]: "
-              "Spool thread size : %i", pool->max_thread_count);
+	log_message(&(g_cfg->log), LOG_LEVEL_DEBUG, "xrdp-sesman[init_pool]: "
+			"Spool thread size : %i", pool->max_thread_count);
 
 	for(i=0 ; i<pool->max_thread_count ; i++)
 	{
