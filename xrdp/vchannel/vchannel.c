@@ -28,7 +28,7 @@ static int channel_count = 0;
 
 
 /*****************************************************************************/
-int
+	int
 vchannel_add_channel(int sock, const char* name)
 {
 	strncpy(channel_list[channel_count].name, name, 9);
@@ -38,7 +38,7 @@ vchannel_add_channel(int sock, const char* name)
 }
 
 /*****************************************************************************/
-int
+	int
 vchannel_remove_channel(int sock)
 {
 	Vchannel* chan;
@@ -46,7 +46,7 @@ vchannel_remove_channel(int sock)
 	if(index == ERROR)
 	{
 		log_message(log_conf, LOG_LEVEL_WARNING ,"vchannel[vchannel_remove_channel]: "
-			"Unable to remove channel");
+				"Unable to remove channel");
 		return 1;
 	}
 	chan = &channel_list[index];
@@ -66,7 +66,7 @@ vchannel_remove_channel(int sock)
 
 
 /*****************************************************************************/
-int
+	int
 vchannel_try_open(const char* name)
 {
 	int sock;
@@ -126,7 +126,7 @@ vchannel_try_open(const char* name)
 }
 
 /*****************************************************************************/
-int
+	int
 vchannel_get_channel_from_socket(int sock)
 {
 	int i;
@@ -141,7 +141,7 @@ vchannel_get_channel_from_socket(int sock)
 }
 
 /*****************************************************************************/
-int
+	int
 vchannel_open(const char* name)
 {
 	int count = 0;
@@ -171,7 +171,7 @@ vchannel_open(const char* name)
 }
 
 /*****************************************************************************/
-int APP_CC
+	int APP_CC
 vchannel_send(int sock, const char* data, int length)
 {
 	return _vchannel_send(sock, DATA_MESSAGE, data, length);
@@ -179,7 +179,7 @@ vchannel_send(int sock, const char* data, int length)
 
 
 /*****************************************************************************/
-int
+	int
 _vchannel_send(int sock, int type, const char* data, int length)
 {
 	struct stream* header;
@@ -229,7 +229,7 @@ _vchannel_send(int sock, int type, const char* data, int length)
 }
 
 /*****************************************************************************/
-int
+	int
 vchannel_receive(int sock, const char* data, int* length, int* total_length)
 {
 	struct stream* header;
@@ -272,26 +272,26 @@ vchannel_receive(int sock, const char* data, int* length, int* total_length)
 
 	switch(type)
 	{
-	case CHANNEL_OPEN:
-		log_message(log_conf, LOG_LEVEL_DEBUG ,"vchannel{%s}[vchannel_receive]: "
-				"CHANNEL OPEN message is invalid message", channel->name);
-		rv = ERROR;
-		break;
-	case SETUP_MESSAGE:
-		log_message(log_conf, LOG_LEVEL_DEBUG ,"vchannel{%s}[vchannel_receive]: "
-				"Status change message", channel->name);
-		rv = 0;
-		break;
-	case DATA_MESSAGE:
-		log_message(log_conf, LOG_LEVEL_DEBUG ,"vchannel{%s}[vchannel_receive]: "
-				"Data message", channel->name);
-		rv = 0;
-		break;
-	default:
-		log_message(log_conf, LOG_LEVEL_ERROR ,"vchannel{%s}[vchannel_receive]: "
-				"Invalid message '%02x'", channel->name, type);
-		rv = ERROR;
-		break;
+		case CHANNEL_OPEN:
+			log_message(log_conf, LOG_LEVEL_DEBUG ,"vchannel{%s}[vchannel_receive]: "
+					"CHANNEL OPEN message is invalid message", channel->name);
+			rv = ERROR;
+			break;
+		case SETUP_MESSAGE:
+			log_message(log_conf, LOG_LEVEL_DEBUG ,"vchannel{%s}[vchannel_receive]: "
+					"Status change message", channel->name);
+			rv = 0;
+			break;
+		case DATA_MESSAGE:
+			log_message(log_conf, LOG_LEVEL_DEBUG ,"vchannel{%s}[vchannel_receive]: "
+					"Data message", channel->name);
+			rv = 0;
+			break;
+		default:
+			log_message(log_conf, LOG_LEVEL_ERROR ,"vchannel{%s}[vchannel_receive]: "
+					"Invalid message '%02x'", channel->name, type);
+			rv = ERROR;
+			break;
 	}
 	if( rv == ERROR)
 	{
@@ -301,13 +301,13 @@ vchannel_receive(int sock, const char* data, int* length, int* total_length)
 	if (nb_read == -1)
 	{
 		log_message(log_conf, LOG_LEVEL_ERROR ,"vchannel{%s}[vchannel_receive]: "
-			"Error while receiving data [%s]", channel->name, strerror(errno));
+				"Error while receiving data [%s]", channel->name, strerror(errno));
 		return ERROR;
 	}
 	if(nb_read != *length)
 	{
 		log_message(log_conf, LOG_LEVEL_ERROR ,"vchannel{%s}[vchannel_receive]: "
-			"Data length is invalid", channel->name);
+				"Data length is invalid", channel->name);
 		return ERROR;
 	}
 	log_message(log_conf, LOG_LEVEL_DEBUG_PLUS ,"vchannel{%s}[vchannel_receive]: "
@@ -321,7 +321,7 @@ vchannel_receive(int sock, const char* data, int* length, int* total_length)
 }
 
 /*****************************************************************************/
-int
+	int
 vchannel_close(int sock)
 {
 	Vchannel* channel;
@@ -341,78 +341,78 @@ vchannel_close(int sock)
 }
 
 /*****************************************************************************/
-int
+	int
 vchannel_init()
 {
-  char filename[256];
-  char log_filename[256];
-  char display_text;
-  struct list* names;
-  struct list* values;
-  char* name;
-  char* value;
-  int index;
-  int display_num;
+	char filename[256];
+	char log_filename[256];
+	char display_text;
+	struct list* names;
+	struct list* values;
+	char* name;
+	char* value;
+	int index;
+	int display_num;
 
-  display_num = g_get_display_num_from_display(g_strdup(g_getenv("DISPLAY")));
+	display_num = g_get_display_num_from_display(g_strdup(g_getenv("DISPLAY")));
 	if(display_num == 0)
 	{
 		g_printf("vchannel[vchannel_init]: Display must be different of 0\n");
 		return ERROR;
 	}
 	log_conf = g_malloc(sizeof(struct log_config), 1);
-  log_conf->program_name = "vchannel";
-  log_conf->log_file = 0;
-  log_conf->fd = 0;
-  log_conf->log_level = LEVEL_DEBUG;
-  log_conf->enable_syslog = 0;
-  log_conf->syslog_level = LEVEL_DEBUG;
+	log_conf->program_name = "vchannel";
+	log_conf->log_file = 0;
+	log_conf->fd = 0;
+	log_conf->log_level = LEVEL_DEBUG;
+	log_conf->enable_syslog = 0;
+	log_conf->syslog_level = LEVEL_DEBUG;
 
-  names = list_create();
-  names->auto_free = 1;
-  values = list_create();
-  values->auto_free = 1;
-  g_snprintf(filename, 255, "%s/vchannel.ini", XRDP_CFG_PATH);
-  if (file_by_name_read_section(filename, VCHAN_CFG_LOGGING, names, values) == 0)
-  {
-    for (index = 0; index < names->count; index++)
-    {
-      name = (char*)list_get_item(names, index);
-      value = (char*)list_get_item(values, index);
-      if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_FILE))
-      {
-        log_conf->log_file = (char*)g_strdup(value);
-      }
-      if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_LEVEL))
-      {
-        log_conf->log_level = log_text2level(value);
-      }
-      if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_ENABLE_SYSLOG))
-      {
-        log_conf->enable_syslog = log_text2bool(value);
-      }
-      if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_SYSLOG_LEVEL))
-      {
-        log_conf->syslog_level = log_text2level(value);
-      }
-    }
-    if( g_strlen(log_conf->log_file) > 1)
-    {
-    	g_sprintf(log_filename, "%s/%i/vchannels.log",
-    			log_conf->log_file,	display_num);
-    	log_conf->log_file = (char*)g_strdup(log_filename);
-    }
-  	if(log_start(log_conf) != LOG_STARTUP_OK)
-  	{
-  		g_printf("vchannel[vchannel_init]: Unable to start log system\n");
-  	}
-  }
-  else
-  {
-  	g_printf("vchannel[vchannel_init]: Invalid channel configuration file : %s\n", filename);
-  	return 1;
-  }
-  list_delete(names);
-  list_delete(values);
-  return 0;
+	names = list_create();
+	names->auto_free = 1;
+	values = list_create();
+	values->auto_free = 1;
+	g_snprintf(filename, 255, "%s/vchannel.ini", XRDP_CFG_PATH);
+	if (file_by_name_read_section(filename, VCHAN_CFG_LOGGING, names, values) == 0)
+	{
+		for (index = 0; index < names->count; index++)
+		{
+			name = (char*)list_get_item(names, index);
+			value = (char*)list_get_item(values, index);
+			if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_FILE))
+			{
+				log_conf->log_file = (char*)g_strdup(value);
+			}
+			if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_LEVEL))
+			{
+				log_conf->log_level = log_text2level(value);
+			}
+			if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_ENABLE_SYSLOG))
+			{
+				log_conf->enable_syslog = log_text2bool(value);
+			}
+			if (0 == g_strcasecmp(name, VCHAN_CFG_LOG_SYSLOG_LEVEL))
+			{
+				log_conf->syslog_level = log_text2level(value);
+			}
+		}
+		if( g_strlen(log_conf->log_file) > 1)
+		{
+			g_sprintf(log_filename, "%s/%i/vchannels.log",
+					log_conf->log_file,	display_num);
+			log_conf->log_file = (char*)g_strdup(log_filename);
+		}
+		if(log_start(log_conf) != LOG_STARTUP_OK)
+		{
+			g_printf("vchannel[vchannel_init]: Unable to start log system\n");
+		}
+	}
+	else
+	{
+		g_printf("vchannel[vchannel_init]: Invalid channel configuration file : %s\n", filename);
+		return 1;
+	}
+	list_delete(names);
+	list_delete(values);
+	return 0;
 }
