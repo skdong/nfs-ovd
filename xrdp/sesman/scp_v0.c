@@ -59,6 +59,7 @@ scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 		log_message(&(g_cfg->log), LOG_LEVEL_WARNING, "User %s failed to authenticate", s->username);
 		scp_v0s_deny_connection(c, "Your username or \nyour password is invalid");
 		tc_mutex_unlock(session_creation_lock);
+		scp_session_destroy(s);
 		return;
 	}
 	lock_chain_acquire();
@@ -84,6 +85,7 @@ scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 		auth_end(data);
 		g_free(s_item);
 		tc_mutex_unlock(session_creation_lock);
+		scp_session_destroy(s);
 		return;
 	}
 	log_message(&(g_cfg->log), LOG_LEVEL_DEBUG, "No session already started for the user %s", s->username);
@@ -95,6 +97,7 @@ scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 
 		auth_end(data);
 		tc_mutex_unlock(session_creation_lock);
+		scp_session_destroy(s);
 		return;
 	}
 
@@ -126,5 +129,6 @@ scp_v0_process(struct SCP_CONNECTION* c, struct SCP_SESSION* s)
 	}
 
 	tc_mutex_unlock(session_creation_lock);
+	scp_session_destroy(s);
 }
 
